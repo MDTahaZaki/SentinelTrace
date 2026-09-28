@@ -1,0 +1,175 @@
+{
+  "_notice": "SYNTHETIC DATA. Every handle, key, wallet, certificate and writing sample in this file is fictional and was written for the SentinelTrace hackathon demo. Nothing here was collected from a real service.",
+  "sources": [
+    {"id": "shadowbazaar", "name": "ShadowBazaar", "type": "marketplace"},
+    {"id": "nullforum",    "name": "NullForum",    "type": "forum"},
+    {"id": "cryptvault",   "name": "CryptVault",   "type": "marketplace"}
+  ],
+  "footprints": [
+    {
+      "id": "fp-01",
+      "source": "shadowbazaar",
+      "handle": "v3nom_x",
+      "pgp_fingerprint": "4F2A 9C1E 77B3 0D58 E6A1  2B94 C0FF 3E71 A9D2 5B06",
+      "btc_wallet": "bc1qv3n0m8x7q2l9d4k6s0t5w3r8y1p7m2c4h6j9e0",
+      "writing_sample": "hey bro u will recieve tracking in 24h, stealth ship guarenteed!! escrow only no FE sry ~ msg me first if u need reship bro.",
+      "ssl_cert_cn": "vnx-shop.local",
+      "server_banner": "nginx/1.18.0 (Ubuntu)",
+      "last_seen": "2026-03-14"
+    },
+    {
+      "id": "fp-02",
+      "source": "cryptvault",
+      "handle": "GhostMerchant",
+      "pgp_fingerprint": "8D13E0B7A4C25F9901AB6E3C7D48F21A0B9C6E5D",
+      "btc_wallet": "BC1QV3N0M8X7Q2L9D4K6S0T5W3R8Y1P7M2C4H6J9E0",
+      "writing_sample": "u will recieve ur order in 24h bro, stealth packing guarenteed!! escrow only no FE sry ~ msg me first if u need reship.",
+      "ssl_cert_cn": "gm-vault.local",
+      "server_banner": "Apache/2.4.41 (Ubuntu)",
+      "last_seen": "2026-05-02"
+    },
+    {
+      "id": "fp-03",
+      "source": "nullforum",
+      "handle": "silent_quill",
+      "pgp_fingerprint": "2C7E 5A90 D1F4 38B6 AE02  7C19 64DB F85E 03A7 C2B1",
+      "btc_wallet": "bc1qs1l3ntqu1ll7r4f8g2h5k9m3n6p0x4z8c2v5b7",
+      "writing_sample": "new acc bro, u will recieve ur order in 24h, stealth delivery guarenteed!! escrow only no FE sry ~ msg me first if u need reship.",
+      "ssl_cert_cn": "quill-notes.local",
+      "server_banner": "lighttpd/1.4.55",
+      "last_seen": "2026-08-21"
+    },
+    {
+      "id": "fp-04",
+      "source": "shadowbazaar",
+      "handle": "DarkPharma",
+      "pgp_fingerprint": "91B4 E2C7 0A6F 5D38 C1E9  4B72 8F05 D3A6 2E1C 7B94",
+      "btc_wallet": "bc1qd4rkph4rm4z3x7c1v9b5n2m8l4k6j0h3g7f5d1",
+      "writing_sample": "Pharmaceutical-grade product. Lab tested; COA available upon request. Orders placed before 18:00 UTC dispatch same day.",
+      "ssl_cert_cn": "dp-store.local",
+      "server_banner": "nginx/1.22.1",
+      "last_seen": "2026-02-09"
+    },
+    {
+      "id": "fp-05",
+      "source": "nullforum",
+      "handle": "rx_kingpin",
+      "pgp_fingerprint": "91b4e2c70a6f5d38c1e94b728f05d3a62e1c7b94",
+      "btc_wallet": "bc1qrxk1ngp1n5t8w2q6e4r9y3u7i1o5p8a2s6d0f4",
+      "writing_sample": "Back in business. Every batch is independently assayed, and certificates can be shared privately. Please allow 48 hours for replies.",
+      "ssl_cert_cn": "rxk-hub.local",
+      "server_banner": "nginx/1.22.1",
+      "last_seen": "2026-06-30"
+    },
+    {
+      "id": "fp-06",
+      "source": "cryptvault",
+      "handle": "CardKing",
+      "pgp_fingerprint": "5E08 B3D1 F7A2 C64E 9B10  D8F3 27AC 6E45 1B9D 0F83",
+      "btc_wallet": "bc1qc4rdk1ng8m3n5b7v9c1x3z5l7k9j2h4g6f8d0s",
+      "writing_sample": "FRESH DUMPS 101/201 HIGH BALANCE. VALID RATE 90%+. BULK DISCOUNTS FOR REGULARS. CHECK MY FEEDBACK BEFORE ASKING.",
+      "ssl_cert_cn": "carding-portal.local",
+      "server_banner": "nginx/1.14.0 (Ubuntu) [custom-build-7731]",
+      "last_seen": "2026-04-18"
+    },
+    {
+      "id": "fp-07",
+      "source": "shadowbazaar",
+      "handle": "dumps_depot",
+      "pgp_fingerprint": "A3F6 1D94 0C7B E852 3F1A  96D0 B4E7 2C58 D01F 6A39",
+      "btc_wallet": "bc1qdumpsd3p0t2a4s6d8f0g1h3j5k7l9z2x4c6v8b",
+      "writing_sample": "Track data refreshed on a weekly basis. Declines are replaced within twelve hours. Volume buyers may negotiate pricing.",
+      "ssl_cert_cn": "carding-portal.local",
+      "server_banner": "nginx/1.14.0 (Ubuntu) [custom-build-7731]",
+      "last_seen": "2026-07-11"
+    },
+    {
+      "id": "fp-08",
+      "source": "nullforum",
+      "handle": "n0mad",
+      "pgp_fingerprint": "C81E 4A3B 96D2 0F75 E3B8  1C64 A92D 57F0 3E8B 16C4",
+      "btc_wallet": "bc1qn0m4d7c3x5z1a9s8d6f4g2h0j7k5l3q1w9e7r5",
+      "writing_sample": "Looking for someone comfortable with Rust and async networking. Long-term contract, paid in XMR. DM a portfolio.",
+      "ssl_cert_cn": "n0mad-dev.local",
+      "server_banner": "Caddy",
+      "last_seen": "2026-01-27"
+    },
+    {
+      "id": "fp-09",
+      "source": "nullforum",
+      "handle": "cipher_monk",
+      "pgp_fingerprint": "07D5 B91C 3E6A F428 0B7D  C5E1 96A3 F02B 8D4C 71E5",
+      "btc_wallet": "bc1qc1ph3rm0nk4t6y8u0i2o4p6a8s0d2f4g6h8j0k",
+      "writing_sample": "Greetings. I offer consultation on operational security matters. Serious inquiries only; time-wasters will be ignored.",
+      "ssl_cert_cn": "monastery.local",
+      "server_banner": "OpenResty/1.21.4.1",
+      "last_seen": "2026-08-02"
+    },
+    {
+      "id": "fp-10",
+      "source": "shadowbazaar",
+      "handle": "QuietHarbour",
+      "pgp_fingerprint": "E4A0 7F2D 1B96 C35E 8A04  D7B1 63F9 2C0E A58D 4B17",
+      "btc_wallet": "bc1qqu13th4rb0ur3e5r7t9y1u3i5o7p9a1s3d5f7g",
+      "writing_sample": "Kindly note that the shop is closed for the holiday period. All outstanding orders have been honoured. Apologies for any inconvenience.",
+      "ssl_cert_cn": "harbour-goods.local",
+      "server_banner": "nginx/1.24.0",
+      "last_seen": "2025-12-20"
+    },
+    {
+      "id": "fp-11",
+      "source": "cryptvault",
+      "handle": "byte_widow",
+      "pgp_fingerprint": "3B69 D0E2 A74F 1C85 B6E3  09A7 D2F4 8C16 E5B0 39A2",
+      "btc_wallet": "bc1qbyt3w1d0w9m7n5b3v1c9x7z5l3k1j9h7g5f3d1",
+      "writing_sample": "leaked db, 2.1M rows, emails + bcrypt hashes. sample avail. price is firm. no middlemen pls.",
+      "ssl_cert_cn": "widow-leaks.local",
+      "server_banner": "Apache/2.4.57 (Debian)",
+      "last_seen": "2026-06-05"
+    },
+    {
+      "id": "fp-12",
+      "source": "cryptvault",
+      "handle": "koala_ops",
+      "pgp_fingerprint": "F1C3 8E5A 20B7 D946 C3F1  7A28 E0B5 94D3 6C1A 82F7",
+      "btc_wallet": "bc1qk04l40ps6d4f2g0h8j6k4l2z0x8c6v4b2n0m8q",
+      "writing_sample": "G'day all. Running a small VPN resale gig, servers across four countries. Monthly plans, crypto only, cheers mates.",
+      "ssl_cert_cn": "koala-vpn.local",
+      "server_banner": "nginx/1.24.0",
+      "last_seen": "2026-07-29"
+    },
+    {
+      "id": "fp-13",
+      "source": "shadowbazaar",
+      "handle": "mr_tidy",
+      "pgp_fingerprint": "6A2F C07B 94E1 3D58 A2C6  F190 7B4E D38A 05F2 C967",
+      "btc_wallet": "bc1qmrt1dy1q3w5e7r9t1y3u5i7o9p1a3s5d7f9g1h",
+      "writing_sample": "Professional document services: passports, licences, utility bills. Discreet, high quality, worldwide shipping.",
+      "ssl_cert_cn": "tidy-docs.local",
+      "server_banner": "Microsoft-IIS/10.0",
+      "last_seen": "2026-03-03"
+    },
+    {
+      "id": "fp-14",
+      "source": "nullforum",
+      "handle": "zer0day_zed",
+      "pgp_fingerprint": "D7E1 4B08 C95A 26F3 1E7D  B048 C6A9 3F12 7D05 E8B4",
+      "btc_wallet": "bc1qz3r0d4yz3d2f4g6h8j0k2l4z6x8c0v2b4n6m8q",
+      "writing_sample": "0day4sale: pre-auth RCE in a popular CMS plugin. PoC vid on req. Established members w/ rep ONLY.",
+      "ssl_cert_cn": "zed-labs.local",
+      "server_banner": "gunicorn/20.1.0",
+      "last_seen": "2026-09-12"
+    },
+    {
+      "id": "fp-15",
+      "source": "nullforum",
+      "handle": "lurker99",
+      "pgp_fingerprint": "",
+      "btc_wallet": "",
+      "writing_sample": "anyone else getting 502 errors all morning? pulled my coins off the market just in case, not taking chances this time.",
+      "ssl_cert_cn": "",
+      "server_banner": "",
+      "last_seen": "2026-09-25"
+    }
+  ]
+}

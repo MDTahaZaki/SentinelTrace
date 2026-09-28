@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SentinelTrace</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Stored locally so the demo works without internet -->
+  <script src="vendor/vis-network.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">◈</span>
+      <div>
+        <h1>SentinelTrace</h1>
+        <p>SIH26151 · Dark Web Threat Actor De-anonymization</p>
+      </div>
+    </div>
+    <span class="badge">Synthetic data · offline demo</span>
+  </header>
+
+  <main>
+    <!-- Pipeline: the four stages from the architecture slide -->
+    <section class="pipeline" aria-label="Pipeline">
+      <ol class="stages" id="stages">
+        <li data-stage="acquire"><span class="num">1</span><div><b>Acquisition</b><small>Collect footprints</small></div></li>
+        <li data-stage="normalise"><span class="num">2</span><div><b>Normalise / Store</b><small>Clean identifiers</small></div></li>
+        <li data-stage="correlate"><span class="num">3</span><div><b>Correlation Engine</b><small>Keys, wallets, stylometry</small></div></li>
+        <li data-stage="attribute"><span class="num">4</span><div><b>Attribution</b><small>Actors &amp; aliases</small></div></li>
+      </ol>
+      <div class="controls">
+        <button id="btn-run" class="primary">▶ Run pipeline</button>
+        <button id="btn-step">Step ›</button>
+        <button id="btn-reset">↺ Reset</button>
+      </div>
+      <div class="log" id="log" aria-live="polite">
+        <p class="muted">Pipeline idle. Click <b>Run pipeline</b> to start.</p>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <div class="graph-card">
+        <div class="card-head">
+          <h2>Identity graph</h2>
+          <div class="legend">
+            <span><i class="ln hard"></i>Hard link (key / wallet)</span>
+            <span><i class="ln style"></i>Stylometry (suggested)</span>
+            <span><i class="ln infra"></i>Infrastructure</span>
+          </div>
+        </div>
+        <div id="graph"></div>
+        <p class="graph-empty" id="graph-empty">No footprints collected yet.</p>
+      </div>
+
+      <aside class="panel" id="panel">
+        <h2>Evidence</h2>
+        <p class="muted">Click a node or a link in the graph, or a row in the table.</p>
+      </aside>
+    </section>
+
+    <section class="results">
+      <div class="toolbar">
+        <input id="q" type="search" placeholder="Search handle, wallet, PGP key, actor…" autocomplete="off">
+        <label>Last seen from <input id="from" type="date"></label>
+        <label>to <input id="to" type="date"></label>
+        <label class="check"><input id="expand" type="checkbox" checked> include linked personas</label>
+        <span class="spacer"></span>
+        <button id="btn-csv" disabled>⤓ CSV</button>
+        <button id="btn-json" disabled>⤓ JSON</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Actor</th><th>Handle</th><th>Source</th><th>Identifiers</th><th>Confidence</th><th>Strongest link</th><th>Last seen</th></tr>
+          </thead>
+          <tbody id="rows">
+            <tr><td colspan="7" class="muted center">Run the pipeline to build actor profiles.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

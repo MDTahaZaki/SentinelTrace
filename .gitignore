@@ -1,0 +1,24 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Secrets / local config (none are used today; kept out in case they're added later)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+
+# Exports downloaded from the UI
+sentineltrace_export*.csv
+sentineltrace_export*.json
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
