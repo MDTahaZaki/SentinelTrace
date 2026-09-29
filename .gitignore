@@ -22,3 +22,4 @@ sentineltrace_export*.json
 .idea/
 .DS_Store
 Thumbs.db
+static/snapshot.json

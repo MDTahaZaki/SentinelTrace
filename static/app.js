@@ -25,10 +25,116 @@ const state = {
 
 // ---- API ------------------------------------------------------------------
 
+// Relative paths so the app also works under a sub-path (e.g. GitHub Pages).
 async function api(path, method = "GET") {
-  const res = await fetch(path, { method });
+  if (staticMode) return staticApi(path, method);
+  const res = await fetch(path.replace(/^\//, ""), { method });
   if (!res.ok) throw new Error(`${method} ${path}: ${res.status} ${await res.text()}`);
   return res.json();
+}
+
+// ---- static fallback (GitHub Pages) ----------------------------------------
+// With no backend, replay the stage results precomputed by app/build_static.py
+// and run search / export in the browser.
+
+let staticMode = false;
+const snap = { data: null, completed: [] };
+
+async function detectStaticMode() {
+  try {
+    const res = await fetch("api/pipeline");
+    if (res.ok && (res.headers.get("content-type") || "").includes("json")) return;
+  } catch { /* no backend */ }
+  const res = await fetch("snapshot.json");
+  if (!res.ok) throw new Error("no backend and no snapshot.json");
+  snap.data = await res.json();
+  staticMode = true;
+  document.querySelector(".badge").textContent = "Synthetic data · static demo";
+}
+
+function staticStatus() {
+  const c = snap.completed;
+  return { stages: STAGES, completed: [...c], next: STAGES[c.length] ?? null };
+}
+
+function staticApi(path, method) {
+  const [route, query = ""] = path.split("?");
+  if (route === "/api/pipeline") return staticStatus();
+  if (route === "/api/pipeline/reset") { snap.completed = []; return staticStatus(); }
+  if (route.startsWith("/api/pipeline/")) {
+    const stage = route.split("/").pop();
+    if (stage !== STAGES[snap.completed.length]) throw new Error(`next stage is ${STAGES[snap.completed.length]}, not ${stage}`);
+    snap.completed.push(stage);
+    return { summary: snap.data.stages[stage].summary, status: staticStatus() };
+  }
+  if (route === "/api/graph") {
+    const last = snap.completed[snap.completed.length - 1];
+    return last ? snap.data.stages[last].graph : { nodes: [], edges: [] };
+  }
+  if (route === "/api/actors") return staticSearch(new URLSearchParams(query));
+  throw new Error(`${method} ${path}: not available in static mode`);
+}
+
+// Mirrors Pipeline.search in app/pipeline.py.
+function staticSearch(params) {
+  const q = (params.get("q") || "").trim().toLowerCase();
+  const from = params.get("date_from") || "", to = params.get("date_to") || "";
+  const expand = params.get("expand") !== "false";
+  const profiles = snap.data.profiles;
+  const matches = (p) => {
+    if (from && p.last_seen < from) return false;
+    if (to && p.last_seen > to) return false;
+    if (!q) return true;
+    return [p.handle, p.source, p.actor, p.btc_wallet, p.pgp_fingerprint, p.ssl_cert_cn]
+      .some((h) => (h || "").toLowerCase().includes(q));
+  };
+  const hitIds = new Set(profiles.filter(matches).map((p) => p.id));
+  if (expand && q) {
+    const hits = profiles.filter((p) => hitIds.has(p.id));
+    const actors = new Set(hits.flatMap((p) => [p.actor, p.suggested_actor]).filter(Boolean));
+    hits.forEach((p) => p.links.forEach((l) => hitIds.add(l.id)));
+    profiles.forEach((p) => { if (actors.has(p.actor) || actors.has(p.suggested_actor)) hitIds.add(p.id); });
+  }
+  return profiles.filter((p) => hitIds.has(p.id)).map((p) => ({ ...p, direct_match: matches(p) }));
+}
+
+// Mirrors app/export.py.
+const CSV_COLUMNS = ["actor", "suggested_actor", "handle", "source", "pgp_fingerprint", "btc_wallet",
+  "ssl_cert_cn", "confidence", "top_link", "last_seen"];
+
+function csvCell(v) {
+  const s = String(v ?? "");
+  return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
+function staticExport(kind) {
+  const params = new URLSearchParams(searchParams());
+  const profiles = staticSearch(params);
+  let body, type;
+  if (kind === "csv") {
+    const rows = profiles.map((p) => CSV_COLUMNS.map((k) => {
+      if (k === "top_link") return p.top_link ? `${p.top_link.handle} (${p.top_link.confidence}): ${p.top_link.reason}` : "";
+      if (k === "confidence") return p.confidence ?? "";
+      return p[k] || "";
+    }).map(csvCell).join(","));
+    body = [CSV_COLUMNS.join(","), ...rows].join("\r\n") + "\r\n";
+    type = "text/csv";
+  } else {
+    body = JSON.stringify({
+      generated_at: new Date().toISOString().replace(/\.\d+Z$/, "+00:00"),
+      notice: "SentinelTrace demo export - synthetic data only",
+      query: { q: params.get("q") || "", date_from: params.get("date_from") || "",
+               date_to: params.get("date_to") || "", expand: params.get("expand") !== "false" },
+      count: profiles.length,
+      profiles,
+    }, null, 2);
+    type = "application/json";
+  }
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([body], { type }));
+  a.download = `sentineltrace_export.${kind}`;
+  a.click();
+  URL.revokeObjectURL(a.href);
 }
 
 function searchParams() {
@@ -411,12 +517,17 @@ $("btn-reset").addEventListener("click", async () => {
   try { await doReset(); } catch (err) { reportError(err); }
   setBusy(false);
 });
-$("btn-csv").addEventListener("click", () => { window.location = `/api/export.csv?${searchParams()}`; });
-$("btn-json").addEventListener("click", () => { window.location = `/api/export.json?${searchParams()}`; });
+function exportResults(kind) {
+  if (staticMode) staticExport(kind);
+  else window.location = `api/export.${kind}?${searchParams()}`;
+}
+$("btn-csv").addEventListener("click", () => exportResults("csv"));
+$("btn-json").addEventListener("click", () => exportResults("json"));
 
 // On page load, restore whatever the server has already run (e.g. after a browser refresh).
 (async function init() {
   try {
+    await detectStaticMode();
     const status = await api("/api/pipeline");
     state.completed = status.completed;
     STAGES.forEach((s) => setStageClass(s, state.completed.includes(s) ? "done" : null));
